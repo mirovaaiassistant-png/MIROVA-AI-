@@ -8,8 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Mirova AI - Neural Hub</title>
     
-    <!-- Base path safety for standard deployments -->
-    <base href="./" />
+    <!-- Removed base href="./" to fix Netlify asset loading issues -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -60,6 +59,24 @@
         "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0"
       }
     }
+    </script>
+
+    <!-- Emergency Error Trap -->
+    <script>
+      window.addEventListener('error', function(e) {
+        var loader = document.getElementById('fallback-loader');
+        if (loader && !loader.classList.contains('hidden')) {
+          // If the app crashes while loading, show the error
+          var msg = document.createElement('div');
+          msg.style.color = '#ef4444';
+          msg.style.marginTop = '20px';
+          msg.style.textAlign = 'center';
+          msg.style.fontFamily = 'monospace';
+          msg.style.fontSize = '10px';
+          msg.innerText = 'INIT FAILURE: ' + (e.message || 'Unknown Error');
+          loader.appendChild(msg);
+        }
+      });
     </script>
   </head>
   <body>
